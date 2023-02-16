@@ -202,7 +202,10 @@ var onMouseoverSquare = function (square, piece) {
 
     greySquare(square);
 
-
+    /* Highlighting the possible moves. */
+    for (var i = 0; i < moves.length; i++) {
+        greySquare(moves[i].to);
+    }
 };
 
 var onMouseoutSquare = function (square, piece) {
