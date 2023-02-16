@@ -165,7 +165,51 @@ var onDragStart = function (source, piece, position, orientation) {
     }
 };
 
+/* Making the best move. */
+var makeBestMove = function () {
+    var bestMove = getBestMove(game);
+    game.ugly_move(bestMove);
+    board.position(game.fen());
+    renderMoveHistory(game.history());
+    if (game.game_over()) {
+        alert('Game over');
+    }
+};
 
+
+var getBestMove = function (game) {
+    if (game.game_over()) {
+        alert('Game over');
+        location.reload();
+    }
+
+    positionCount = 0;
+    var depth = parseInt($('#search-depth').find(':selected').text());
+
+    /* Calculating the time it takes to make a move. */
+    var d = new Date().getTime();
+    var bestMove = minimaxRoot(depth, game, true);
+    var d2 = new Date().getTime();
+    var moveTime = (d2 - d);
+    var positionsPerS = (positionCount * 1000 / moveTime);
+
+    /* Calculating the time it takes to make a move. */
+    $('#position-count').text(positionCount);
+    $('#time').text(moveTime / 1000 + 's');
+    $('#positions-per-s').text(positionsPerS);
+    return bestMove;
+};
+
+/* Rendering the move history. */
+var renderMoveHistory = function (moves) {
+    var historyElement = $('#move-history').empty();
+    historyElement.empty();
+    for (var i = 0; i < moves.length; i = i + 2) {
+        historyElement.append('<span>White Move: ' + moves[i] + ' Black Move:' + (moves[i + 1] ? moves[i + 1] : ' ') + '</span><br>')
+    }
+    historyElement.scrollTop(historyElement[0].scrollHeight);
+
+};
 
 var onDrop = function (source, target) {
 
