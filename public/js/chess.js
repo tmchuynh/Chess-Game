@@ -1,11 +1,5 @@
-var board, game = new Chess();
+var board,game = new Chess();
 var positionCount;
-var totalEvaluation = 0;
-
-var newGameMoves = game.ugly_moves();
-var bestMove = -9999;
-var bestMoveFound;
-
 
 var pawnEvalWhite = [
     [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -91,6 +85,9 @@ var kingEvalBlack = reverseArray(kingEvalWhite);
 /* The minimax algorithm. */
 var minimaxRoot = function (depth, game, isMaximisingPlayer) {
 
+    var newGameMoves = game.ugly_moves();
+    var bestMove = -9999;
+    var bestMoveFound;
 
     for (var i = 0; i < newGameMoves.length; i++) {
         var newGameMove = newGameMoves[i]
@@ -147,6 +144,7 @@ var minimax = function (depth, game, alpha, beta, isMaximisingPlayer) {
 
 /* Evaluating the board. */
 var evaluateBoard = function (board) {
+    var totalEvaluation = 0;
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
             totalEvaluation = totalEvaluation + getPieceValue(board[i][j], i, j);
