@@ -212,6 +212,9 @@ var onMouseoutSquare = function (square, piece) {
     removeGreySquares();
 };
 
+var removeGreySquares = function () {
+    $('#board .square-55d63').css('background', '');
+};
 
 var greySquare = function (square) {
     var squareEl = $('#board .square-' + square);
